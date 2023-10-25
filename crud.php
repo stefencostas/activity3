@@ -1,65 +1,27 @@
 <?php
+include 'function.php'; // Include the file containing the database connection and functions for adding, updating, and deleting data
 
-if (isset($_POST['submit'])) {
-    $menu_name = trim($_POST['menuName']);
-    $menu_desc = trim($_POST['menuDesc']);
+    if (isset($_POST['submit'])) {
+    // Check if the form was submitted with the 'submit' button
+        $menu_name = trim($_POST['menuName']); 
+        $menu_desc = trim($_POST['menuDesc']); 
+        $price = trim($_POST['price']); 
 
-
-    if (isset($_GET['edit_id'])) {
-        $id = $_GET['edit_id'];
-        update_data($menu_name, $menu_desc, $id);
-    } else {
-        add_data($menu_name, $menu_desc);
-    }
+    add_data($menu_name, $menu_desc, $price); // Call the function to add the new data to the database
 }
 
-$edit_menuname = '';
-$edit_menudesc = '';
+    if (isset($_POST['edit'])) {
+    // Check if the form was submitted with the 'edit' button
+        $id = trim($_POST['id']); 
+        $menu_name = trim($_POST['menuName']); 
+        $menu_desc = trim($_POST['menuDesc']); 
+        $price = trim($_POST['price']); 
 
-
-if (isset($_POST['edit'])) {
-    $edit_id = trim($_POST['edit']);
-    $edit_menu = search_data($edit_id);
-
-    if (!empty($edit_menu)) {
-        $edit_menuname = isset($edit_menu['menu_name']) ? $edit_menu['menu_name'] : '';
-        $edit_menudesc = isset($edit_menu['menu_desc']) ? $edit_menu['menu_desc'] : '';
-
-    }
+    update_data($menu_name, $menu_desc, $price, $id); // Call the function to update the data in the database
 }
 
-if (isset($_POST['delete'])) {
-    $id = trim($_POST['delete']);
-    delete_data($id);
-}
-
-if (isset($_POST['submit'])) {
-    $menu_name = trim($_POST['menuName']);
-    $menu_desc = trim($_POST['menuDesc']);
-
-    if (isset($_GET['edit_id'])) {
-        $id = $_GET['edit_id'];
-        update_data($menu_name, $menu_desc, $id);
-    } else {
-        add_data($menu_name, $menu_desc);
-    }
-}
-
-$edit_menuname = '';
-$edit_menudesc = '';
-
-
-if (isset($_POST['edit'])) {
-    $edit_id = trim($_POST['edit']);
-    $edit_menu = search_data($edit_id);
-
-    if (!empty($edit_menu)) {
-        $edit_menuname = isset($edit_menu['menu_name']) ? $edit_menu['menu_name'] : '';
-        $edit_menudesc = isset($edit_menu['menu_desc']) ? $edit_menu['menu_desc'] : '';
-    }
-}
-
-if (isset($_POST['delete'])) {
-    $id = trim($_POST['delete']);
-    delete_data($id);
+    if (isset($_POST['delete'])) {
+    // Check if the form was submitted with the 'delete' button
+        $id = trim($_POST['delete']); 
+    delete_data($id); // Call the function to delete the data from the database
 }
